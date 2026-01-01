@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>To-Do App</title>
+  <style>
+    body{
+      font-family: Arial;
+      background:#f6f7f7;
+      color:white;
+      display:flex;
+      justify-content:center;
+      margin-top:70px;
+    }
+
+    .container{
+      width:350px;
+      background:#042f42;
+      padding:20px;
+      border-radius:10px;
+    }
+
+    input{
+      width:70%;
+      padding:8px;
+      border-radius:5px;
+      border:none;
+      outline:none;
+    }
+
+    button{
+      padding:8px 10px;
+      margin-left:5px;
+      border:none;
+      background:#27adf5;
+      color:white;
+      border-radius:5px;
+      cursor:pointer;
+    }
+
+    ul{
+      margin-top:20px;
+      padding:0;
+      list-style:none;
+    }
+
+    li{
+      padding:8px;
+      
+      border-radius:5px;
+      margin-top:8px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    li.completed{
+      text-decoration:line-through;
+      color:gray;
+    }
+
+    .delete{
+      background:red;
+      padding:5px 8px;
+      border-radius:4px;
+      cursor:pointer;
+    }
+
+    .count{
+      margin-top:10px;
+      font-size:14px;
+      color:#88ee48;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>To-Do List</h2>
+
+    <input id="taskInput" placeholder="Enter some task!!!!" />
+    <button onclick="addTask()">Add</button>
+
+    
+    <ul id="taskList"></ul>
+
+    <p class="count">Total Tasks: <span id="count">0</span></p>
+  </div>
+
+  <script>
+    const taskInput = document.getElementById("taskInput");
+    const taskList  = document.getElementById("taskList");
+    const countText = document.getElementById("count");
+
+    function updateCount(){
+      countText.innerText = taskList.children.length;
+    }
+
+    function addTask(){
+      const taskText = taskInput.value.trim();
+
+      if(taskText === ""){
+        alert("Enter a task");
+        return;
+      }
+
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <span onclick="toggleComplete(this)">${taskText}</span>
+        <span class="delete" onclick="deleteTask(this)">X</span>
+      `;
+
+      taskList.appendChild(li);
+      taskInput.value = "";
+      updateCount();
+    }
+
+    function toggleComplete(task){
+      task.parentElement.classList.toggle("completed");
+    }
+
+    function deleteTask(task){
+      task.parentElement.remove();
+      updateCount();
+    }
+  </script>
+</body>
+</html>
